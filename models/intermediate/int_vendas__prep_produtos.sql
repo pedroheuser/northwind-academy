@@ -1,5 +1,6 @@
+
 with
-    /* Chamada dos modelos necessários*/ 
+    /* Chamada dos modelos necessários. */
     categorias as (
         select *
         from {{ ref('stg_erp__categorias') }}
@@ -16,7 +17,7 @@ with
     )
 
     , enriquecer_produtos as (
-        select 
+        select
             produtos.PK_PRODUTO
             , produtos.NM_PRODUTO
             , produtos.QUANTIDADE_POR_UNIDADE
@@ -28,12 +29,11 @@ with
             , categorias.NOME_CATEGORIA
             , fornecedores.NOME_FORNECEDOR
             , fornecedores.CIDADE_FORNECEDOR
-            , fornecedores.PAIS_FORNECEDOR
+            , fornecedores.PAIS_FORNECEDOR 
         from produtos
-        left join categorias on produtos.fk_categoria = categorias.pk_categoria 
-        left join fornecedores on fk_fornecedor = fornecedores.pk_fornecedor
-
+        left join categorias on produtos.fk_categoria = categorias.pk_categoria
+        left join fornecedores on produtos.fk_fornecedor = fornecedores.pk_fornecedor
     )
 
-    select *
-    from enriquecer_produtos
+select *
+from enriquecer_produtos
